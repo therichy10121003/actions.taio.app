@@ -122,6 +122,53 @@ External action files hosted on GitHub are also supported.
 - **Mobile-first:** Touch-friendly buttons, responsive layout
 - **No emojis in code/docs** unless already present in existing content
 
+## Creative Techniques
+
+These are the smart patterns used throughout the site. Understand and preserve them when making changes:
+
+- **Device-aware UX:** The JS in `_js/index.js` detects iOS/Mac vs other platforms and routes users differently — native `taio://` import on Apple devices, GitHub blob view elsewhere. Never bypass or duplicate this logic.
+- **Automatic button rendering:** Links to `.json` files are automatically intercepted by `_js/index.js` and rendered as styled "Get Actions" buttons. Just use a plain `<a>` tag linking to the JSON file — no manual button HTML or CSS classes needed.
+- **QR code on-demand:** QR codes are generated client-side via QRious and toggled per-action, not pre-rendered. Never add static QR images to docs.
+- **URL scheme integration:** Actions are imported via `taio://actions?action=import&url=<encoded-url>`. The JS handles URL encoding automatically — don't hardcode encoded URLs in markdown.
+- **Zero-build philosophy:** All content is static files served by Docsify. Never introduce build steps, bundlers, transpilers, or package managers.
+- **Bilingual mirroring:** English (`docs/`) and Chinese (`docs/cn/`) are parallel structures with matching files and layout. When adding or modifying content, always update both versions.
+- **Dual-path external support:** Both local action JSON files (`/docs/actions/...`) and external GitHub-hosted files are supported by the link processor.
+
+## Writing & Documentation Skills
+
+Follow these conventions when writing or editing documentation:
+
+### Action Entry Template
+
+Every action follows this exact 3-part structure:
+
+```markdown
+## Action Name
+
+<a href='/docs/actions/category/action-name.json'>Get Actions</a>
+
+One-sentence description of what the action does. (by [Author Name](https://author.url))
+```
+
+For Chinese, use `获取动作` instead of `Get Actions` and link to `/docs/cn/actions/...`.
+
+### Voice & Tone
+
+- **Present tense, active voice:** "Convert text to HTML", not "This action will convert..."
+- **Verb-first descriptions:** Start with clear action verbs — "Detect", "Extract", "Transfer", "Merge", "Convert"
+- **Single-sentence rule:** Each action description is exactly one concise sentence
+- **No marketing language:** No superlatives ("powerful", "amazing"), no filler words, no emojis
+- **Neutral and technical:** Purely functional descriptions focused on what the user can do
+
+### Formatting Rules
+
+- **Headings:** Use `##` (h2) for action names. No deeper heading nesting within category pages.
+- **Attribution:** Always end descriptions with `(by [Author Name](url))`
+- **No inline media:** The site has no screenshots or embedded images in docs. The action import button is the visual affordance.
+- **No Docsify extensions:** The site uses plain markdown only — no hints, tabs, callouts, or custom containers
+- **Sidebar updates:** When adding a new category, update both `docs/_sidebar.md` and `docs/cn/_sidebar.md`
+- **CSS awareness:** `.rounded_button` styling is auto-applied to JSON links. Image borders and dark mode are automatic. No custom CSS classes needed in markdown content.
+
 ## Git Conventions
 
 - **Main branch:** `master`

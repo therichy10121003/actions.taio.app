@@ -97,12 +97,12 @@ The site supports English (root) and Chinese (`/cn/`). Both share the same struc
 
 ### Linking to Action Files
 
-In documentation markdown files, link to action JSON files using relative paths. The custom JS in `_js/index.js` intercepts these links and provides:
+In documentation markdown files, link to action JSON files using root-relative `/docs/...` paths (e.g. `/docs/actions/category/name.json`); paths without the `/docs/` prefix are not matched. The custom JS in `_js/index.js` intercepts these links and provides:
 - A "Get Actions" button
 - QR code for mobile import (on desktop)
 - Direct `taio://` URL scheme opening (on Apple devices)
 
-External action files hosted on GitHub are also supported.
+External action files hosted on GitHub are also supported, but only URLs containing `/cyanzhong/` (the repo owner's account) are recognized by the link processor.
 
 ## Key Files to Know
 
@@ -132,7 +132,7 @@ These are the smart patterns used throughout the site. Understand and preserve t
 - **URL scheme integration:** Actions are imported via `taio://actions?action=import&url=<encoded-url>`. The JS handles URL encoding automatically — don't hardcode encoded URLs in markdown.
 - **Zero-build philosophy:** All content is static files served by Docsify. Never introduce build steps, bundlers, transpilers, or package managers.
 - **Bilingual mirroring:** English (`docs/`) and Chinese (`docs/cn/`) are parallel structures with matching files and layout. When adding or modifying content, always update both versions.
-- **Dual-path external support:** Both local action JSON files (`/docs/actions/...`) and external GitHub-hosted files are supported by the link processor.
+- **Dual-path external support:** Both local action JSON files (`/docs/actions/...`) and external GitHub-hosted files under the `cyanzhong` account are supported by the link processor.
 
 ## Writing & Documentation Skills
 
